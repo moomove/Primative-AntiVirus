@@ -1,2 +1,7 @@
 C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.AssemblyReference.cache
 C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.CoreCompileInputs.cache
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.exe.config
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.exe
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.pdb
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.exe
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.pdb
