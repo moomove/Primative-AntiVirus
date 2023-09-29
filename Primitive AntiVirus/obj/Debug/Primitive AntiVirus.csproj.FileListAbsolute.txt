@@ -1,0 +1,2 @@
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.AssemblyReference.cache
+C:\Users\Louis R-S\Documents\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.CoreCompileInputs.cache
