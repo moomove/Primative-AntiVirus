@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Primitive_AntiVirus
 {
@@ -20,6 +21,7 @@ namespace Primitive_AntiVirus
         
         static void Main()
         {
+            
             SystemBoot();
         }
 
@@ -51,7 +53,7 @@ namespace Primitive_AntiVirus
         {
             Console.WriteLine($"Killing {p}");
             p.Kill();
-            Sleep(3);//sleep to see if the process reboots itself
+            Thread.Sleep(3000);//sleep to see if the process reboots itself
             CheckProcess(p);
             if (p == null)
             {
