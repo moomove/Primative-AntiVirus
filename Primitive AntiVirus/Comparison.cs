@@ -20,10 +20,10 @@ namespace Primitive_AntiVirus
             exit
 
 
-    
+
     public Comparison()
         {
-            
+
         }
 
         // Method to Get the List of Processes from PList

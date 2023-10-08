@@ -6,14 +6,10 @@ using System.Threading;
 
 namespace Primitive_AntiVirus
 {
-    public class Process
-    {
-        int pID;
-        string pName;
-    }
+
     public class listOfCheckedProcess
     {
-        public List<Process> PList;
+        public List<SysProcess> PList;
     }
 
     class SystemMonitor
