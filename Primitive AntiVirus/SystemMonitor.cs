@@ -9,12 +9,13 @@ namespace Primitive_AntiVirus
 
     public class listOfCheckedProcess
     {
-        public List<SysProcess> PList;
+       
     }
 
     class SystemMonitor
     {
-        
+        public List<ProcessList.SysProcess> CheckedProccess;
+
         static void Main()
         {
             
@@ -29,7 +30,7 @@ namespace Primitive_AntiVirus
                 CheckProcess(uncheckedList.process);
             }
         }
-        public static void CheckProcess(Process p)//quick check of a process
+        public static void CheckProcess(SysProcess p)//quick check of a process
         {
             AnalyiseProcess(p);
         }
