@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Primitive_AntiVirus
 {
-    internal class Class1
+    class Class1
     {
+        ADAD
+
     }
 }
