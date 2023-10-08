@@ -9,7 +9,7 @@ namespace Primitive_AntiVirus
 {
     internal class Comparison
     {
-        From PList, get the list of processes
+       /* From PList, get the list of processes
         From System Monitor, get the processes
 
             function Compare
@@ -18,7 +18,7 @@ namespace Primitive_AntiVirus
             if matching
             mark as Isolation and tracking = 1
             exit
-
+       */
 
 
     public Comparison()
