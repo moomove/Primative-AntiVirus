@@ -67,5 +67,13 @@ namespace Primitive_AntiVirus
                 }
             }
         }
+
+        // Analysing the rest of the processes after sending to B/W list
+        public void AnalyseProcesses()
+        {
+
+
+
+        }
     }
 }
