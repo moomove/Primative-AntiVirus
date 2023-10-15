@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,23 @@ namespace Primitive_AntiVirus
 
             // Implement the logic to get processes from System Monitor here
             // You might use the System.Diagnostics.Process class to query running processes
+
+            try
+            {
+                // Use the Process class to get a list of running processes
+                Process[] allProcesses = Process.GetProcesses();
+
+                foreach (Process process in allProcesses)
+                {
+                    // Add the process name to the processes list
+                    processes.Add(process.ProcessName);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during process retrieval
+                Console.WriteLine("Error getting processes from System Monitor: " + ex.Message);
+            }
 
             return processes;
         }
