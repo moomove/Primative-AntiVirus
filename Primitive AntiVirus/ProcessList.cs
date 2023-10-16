@@ -15,7 +15,7 @@ namespace Primitive_AntiVirus
 
     class ProcessList
     {
-        List<string> blackList = new List<string>();
+        List<Process> pList = new List<Process>();
 
         public List<Process> GetRunningProcesses()
         {

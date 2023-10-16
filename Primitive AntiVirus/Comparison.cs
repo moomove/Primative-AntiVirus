@@ -26,7 +26,7 @@ namespace Primitive_AntiVirus
         {
 
         }
-
+        /*
         // Method to Get the List of Processes from PList
         public List<ProcessList.SysProcess> GetProcessesFromPList()
         {
@@ -132,7 +132,7 @@ namespace Primitive_AntiVirus
 
             }
         }
-
+        */
         // Method to Get Memory Usage of a Process by Process ID
         private float GetMemoryUsage(int processID)
         {
