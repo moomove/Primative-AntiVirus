@@ -15,14 +15,11 @@ namespace Primitive_AntiVirus
 
     class ProcessList
     {
+        List<string> blackList = new List<string>();
+        List<string> whiteList = new List<string>();
+        List<string> grayList = new List<string>();
 
-        public List<SysProcess> pList;
-
-
-        var whiteList = new List<string>();
-        var blackList = new List<string>();
-        var greyList = new List<string>();
-            
+ 
 
         public void AddToWhiteList(string processName)
         {
@@ -34,9 +31,9 @@ namespace Primitive_AntiVirus
             blackList.Add(processName);
         }
 
-        public void AddToGreyList(string processName)
+        public void AddToGrayList(string processName)
         {
-            greyList.Add(processName);
+            grayList.Add(processName);
         }
 
         public bool IsProcessAllowed(string processName)
