@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Primitive_AntiVirus;
 
 namespace Primitive_AntiVirus
 {
+    
 
     public class listOfCheckedProcess
     {
@@ -14,23 +16,25 @@ namespace Primitive_AntiVirus
 
     class SystemMonitor
     {
-        public List<ProcessList.SysProcess> CheckedProccess;
+        //public List<ProcessList.SysProcess> CheckedProccess;
 
         static void Main()
-        {
-            
+        {            
             SystemBoot();
+            Console.ReadLine();
+           
         }
 
         public static void SystemBoot()//gets called on load and sets up the rest of the system
         {
-            var uncheckedList = GeneratePList();
+            var uncheckedList = ProcessList.GetRunningProcesses();
             foreach (Process process in uncheckedList)
             {
-                CheckProcess(uncheckedList.process);
+                Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName);
+                AnalyiseProcess(process);
             }
         }
-        public static void CheckProcess(SysProcess p)//quick check of a process
+        public static void CheckProcess(Process p)//quick check of a process
         {
             AnalyiseProcess(p);
         }
@@ -63,13 +67,13 @@ namespace Primitive_AntiVirus
         }
         public static void PromptUser(Process p)
         {
-            Console.WriteLine($"{p} Is suspected of being suspicious ");
+            Console.WriteLine($"{p.ProcessName} Is suspected of being suspicious ");
             UpdateList(p);
         }
         public static void UpdateList(Process p)
         {
             
-            Console.WriteLine("Add Process to WhiteList [W] or kill process and add to BalckList [B] or any other key to Cancel");
+            Console.WriteLine("Add Process to WhiteList [W] or kill process and add to BlackList [B] or any other key to Cancel");
             string c = Console.ReadLine();
 
             if(c == "w" ||c == "W")
