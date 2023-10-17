@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Primitive_AntiVirus;
 
 namespace Primitive_AntiVirus
 {
@@ -30,10 +29,12 @@ namespace Primitive_AntiVirus
             var uncheckedList = ProcessList.GetRunningProcesses();
             foreach (Process process in uncheckedList)
             {
-                Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName);
+                Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName );
                 AnalyiseProcess(process);
             }
         }
+        public static void 
+
         public static void CheckProcess(Process p)//quick check of a process
         {
             AnalyiseProcess(p);
@@ -42,7 +43,7 @@ namespace Primitive_AntiVirus
         {
 
         }
-        public static void PassToCompBD()
+        public static void PassToCompBD()//useless i think we delete
         {
 
         }
