@@ -5,6 +5,8 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Management;
+//using Microsoft.VisualBasic.Devices;
 
 namespace Primitive_AntiVirus
 {
@@ -115,24 +117,58 @@ namespace Primitive_AntiVirus
 
             }
         }
+        */
+
+        //Create the two lists for the BlackList and the Whitelist
+        List<string> BlackList = new List<string>();
+        List<string> WhiteList = new List<string>();
 
         // Analysing the rest of the processes after sending to B/W list
-        public void AnalyseProcesses()
+        public void AnalyseProcesses(SysProcess process)
         {
-            // Analyze the remaining processes (those not isolated, white-listed, or black-listed)
-            List<ProcessList.SysProcess> remainingProcesses = pListProcesses
-                .Except(isolatedProcesses)
-                .Except(whiteListedProcesses)
-                .Except(blackListedProcesses)
-                .ToList();
-
-            foreach (Process remainingProcesses in pListProcesses)
+            if (BlackList.Contains(process.ProcessName))
             {
+                process.KillProcess();
+            }
+            else
+            {
+                if (WhiteList.Contains(process.ProcessName))
+                {
+                    return;
+                }
+                else
+                {
+                    // The process is not in either list, so analyze memory and CPU usage
+                    float memoryUsage = GetMemoryUsage(process.ProcessId);
+                    float cpuUsage = GetCpuUsage(process.ProcessId);
 
+                    // Check if either memory or CPU usage is above 25%
+                    if (memoryUsage > 25.0f || cpuUsage > 25.0f)
+                    {
+                        // Prompt the user to add the process to the BlackList
+                        Console.WriteLine($"Process {process.ProcessName} has high resource usage. Do you want to add it to the BlackList? (yes/no)");
+                        string userInput = Console.ReadLine();
+                        if (userInput.Equals("yes", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Add the process to the BlackList
+                            BlackList.Add(process.ProcessName);
+                        }
+                        else if (userInput.Equals("no", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Add the process to the WhiteList
+                            WhiteList.Add(process.ProcessName);
+                        }
 
+                    }
+                }
             }
         }
-        */
+
+
+
+
+    
+        
         // Method to Get Memory Usage of a Process by Process ID
         private float GetMemoryUsage(int processID)
         {
@@ -143,8 +179,13 @@ namespace Primitive_AntiVirus
                     // Refresh the process information to get updated memory usage
                     process.Refresh();
 
-                    // Return memory usage in megabytes (MB)
-                    return (float)process.WorkingSet64 / (1024 * 1024);
+                    // Get the total physical memory of the system
+                    long totalMemory = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
+
+                    // Calculate memory usage as a percentage
+                    float memoryUsagePercentage = (float)process.WorkingSet64 / totalMemory * 100.0f;
+
+                    return memoryUsagePercentage;
                 }
             }
             catch (Exception ex)
