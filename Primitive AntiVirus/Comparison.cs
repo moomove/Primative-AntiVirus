@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
-//using Microsoft.VisualBasic.Devices;
+using Microsoft.VisualBasic.Devices;
 
 namespace Primitive_AntiVirus
 {
@@ -28,100 +28,6 @@ namespace Primitive_AntiVirus
         {
 
         }
-        /*
-        // Method to Get the List of Processes from PList
-        public List<ProcessList.SysProcess> GetProcessesFromPList()
-        {
-            List<ProcessList.SysProcess> processes = new List<ProcessList.SysProcess>();
-
-            // Assuming that pList is an instance variable or property in ProcessList
-            if (ProcessList.pList != null)
-            {
-                // Iterate through the list of SysProcess objects in pList and add them to the result list
-                processes.AddRange(ProcessList.pList);
-            }
-
-            return processes;
-        }
-
-        // Method to Get the List of Processes from System Monitor
-        public List<string> GetProcessesFromSystemMonitor()
-        {
-            List<string> processes = new List<string>();
-
-            // Implement the logic to get processes from System Monitor here
-            // You might use the System.Diagnostics.Process class to query running processes
-
-            try
-            {
-                // Use the Process class to get a list of running processes
-                Process[] allProcesses = Process.GetProcesses();
-
-                foreach (Process process in allProcesses)
-                {
-                    // Add the process name to the processes list
-                    processes.Add(process.ProcessName);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur during process retrieval
-                Console.WriteLine("Error getting processes from System Monitor: " + ex.Message);
-            }
-
-            return processes;
-        }
-
-        // Method to Compare Processes for Matches
-        public void CompareProcesses(List<ProcessList.SysProcess> pListProcesses, List<string> systemMonitorProcesses)
-        {
-            List<ProcessList.SysProcess> isolatedProcesses = new List<ProcessList.SysProcess>();
-            List<ProcessList.SysProcess> whiteListedProcesses = new List<ProcessList.SysProcess>();
-            List<ProcessList.SysProcess> blackListedProcesses = new List<ProcessList.SysProcess>();
-
-
-            // Iterate through the processes obtained from PList
-            foreach (ProcessList.SysProcess pListProcess in pListProcesses)
-            {
-                // Check if the process name from PList exists in the system monitor processes
-                if (systemMonitorProcesses.Contains(pListProcess.ProcessName))
-                {
-                    // Mark the process as Isolation and tracking = 1
-                    // Implement the logic to mark the process here
-
-                    // Check if the process is white-listed
-                    if (pListProcess.WhiteListed)
-                    {
-                        // Add the process to the "WhiteList" and skip further checks
-                        whiteListedProcesses.Add(pListProcess);
-                        continue;
-                    }
-
-                    // Check if the process is black-listed
-                    if (pListProcess.BlackListed)
-                    {
-                        // Add the process to the "BlackList" and skip further checks
-                        blackListedProcesses.Add(pListProcess);
-                        continue;
-                    }
-
-                    // If the process is not white-listed or black-listed, mark it as Potentially Malicious
-                    pListProcess.PotentallyMalicous = true;
-
-                    // Add the process to the "Isolation" list
-                    isolatedProcesses.Add(pListProcess);
-                }
-
-            // Exit or continue as needed
-            return;
-
-            }
-        }
-        */
-
-        //Create the two lists for the BlackList and the Whitelist
-
-
         // Analysing the rest of the processes after sending to B/W list
         public static void AnalyseProcess(Process process)
         {
@@ -141,11 +47,11 @@ namespace Primitive_AntiVirus
                 else
                 {
                     // The process is not in either list, so analyze memory and CPU usage
-                    float memoryUsage = GetMemoryUsage(process.Id);
-                    float cpuUsage = GetCpuUsage(process.Id);
+                    float memoryUsage = GetMemoryUsage(process);
+                    float cpuUsage = GetCpuUsage(process);
 
                     // Check if either memory or CPU usage is above 25%
-                    if (memoryUsage > 1.0f || cpuUsage > 1.0f)
+                    if (memoryUsage > 25.0f || cpuUsage > 25.0f)
                     {
                         // Prompt the user to add the process to the BlackList
                         Console.WriteLine($"Process {process.ProcessName} has high resource usage. Do you want to add it to the BlackList? (yes/no)");
@@ -166,43 +72,35 @@ namespace Primitive_AntiVirus
             }
         }
 
-
-
-
-    
-        
         // Method to Get Memory Usage of a Process by Process ID
-        private static float GetMemoryUsage(int processID)
+        private static float GetMemoryUsage(Process process)
         {
             try
             {
-                using (Process process = Process.GetProcessById(processID))
-                {
-                    // Refresh the process information to get updated memory usage
-                    process.Refresh();
+                // Refresh the process information to get updated memory usage
+                process.Refresh();
 
-                    // Get the total physical memory of the system
-                    long totalMemory = (long)new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
+                // Get the total physical memory of the system
+                long totalMemory = (long)new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
 
-                    // Calculate memory usage as a percentage
-                    float memoryUsagePercentage = (float)process.WorkingSet64 / totalMemory * 100.0f;
+                // Calculate memory usage as a percentage
+                float memoryUsagePercentage = (float)process.WorkingSet64 / totalMemory * 100.0f;
 
-                    return memoryUsagePercentage;
-                }
+                return memoryUsagePercentage;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting memory usage for process {processID}: {ex.Message}");
+                Console.WriteLine($"Error getting memory usage for process {process.Id}: {ex.Message}");
                 return 0.0f;
             }
         }
 
         // Method to Get CPU Usage of a Process by Process ID
-        private static float GetCpuUsage(int processID)
+        private static float GetCpuUsage(Process process)
         {
             try
             {
-                using (PerformanceCounter cpuCounter = new PerformanceCounter("Process", "% Processor Time", processID.ToString()))
+                using (PerformanceCounter cpuCounter = new PerformanceCounter("Process", "% Processor Time", process.ProcessName))
                 {
                     // Calculate CPU usage as a percentage
                     float cpuUsage = cpuCounter.NextValue();
@@ -216,7 +114,7 @@ namespace Primitive_AntiVirus
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting CPU usage for process {processID}: {ex.Message}");
+                Console.WriteLine($"Error getting CPU usage for process {process.Id}: {ex.Message}");
                 return 0.0f;
             }
         }
