@@ -64,6 +64,12 @@ namespace Primitive_AntiVirus
                 }
                 else if (input == "4")
                 {
+                    Console.WriteLine("Enter Process ID");
+                    input = Console.ReadLine();
+                    
+                    int.TryParse(input, out int pID);
+                    KillProcess(Process.GetProcessById(pID));
+
 
                 }
                 else if (input == "5")
@@ -114,10 +120,13 @@ namespace Primitive_AntiVirus
         }
         public static void KillProcess(Process p)
         {
+            int pId = p.Id;
             Console.WriteLine($"Killing {p}");
             p.Kill();
             Thread.Sleep(3000);//sleep to see if the process reboots itself
-            CheckProcess(p);
+
+            //p  Process.GetProcessById(pId));
+
             if (p == null)
             {
                 Console.WriteLine("Successfully killed process");
