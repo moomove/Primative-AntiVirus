@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace Primitive_AntiVirus
 {
-    
-
-    public class listOfCheckedProcess
-    {
-       
-    }
 
     class SystemMonitor
     {
@@ -22,7 +16,7 @@ namespace Primitive_AntiVirus
         {            
             SystemBoot();
 
-            MaintainSystem();
+            MainSystem();
             Console.ReadLine();
            
         }
@@ -37,14 +31,11 @@ namespace Primitive_AntiVirus
                 
             }
         }
-        public static async void MaintainSystem() {
+        public static void MainSystem()
+        {
             bool run = true;
-            while (run)
-            {
-                CancellationTokenSource tokenSource = new CancellationTokenSource();
-                CancellationToken token = tokenSource.Token;
-
-                Console.WriteLine("...System being monitored...");
+            while (run) {
+                Console.WriteLine("...Anti-Virus Menu...");
                 Console.WriteLine("");
                 Console.WriteLine("Select an operations you would like to run");
                 Console.WriteLine("");
@@ -54,61 +45,56 @@ namespace Primitive_AntiVirus
                 Console.WriteLine("\t4. Kill Process");
                 Console.WriteLine("\t5. Shutdown Self");
                 Console.WriteLine("\t6. Trace Process");
+                Console.WriteLine("\t7. Continuous System Scan");
                 Console.WriteLine("");
-                Console.WriteLine("");
-                Task userInputTask = WaitForUserInputAsync(token);
 
-                int waitMinutes = 1;//how many minutes to wait
-                int refreshPeriod = waitMinutes * 60000; //the amount of microseconds in a minute
-                Task timeoutTask = Task.Delay(refreshPeriod);
-
-                // Wait for either user input or a timeout
-                Task completedTask = await Task.WhenAny(userInputTask, timeoutTask);
-
-                if (completedTask == userInputTask)
+                string input = Console.ReadLine();
+                
+                if(input == "1")
                 {
-                    // User provided input
-                    Console.WriteLine("...System Monitoring Paused...");
-                    string option = Console.ReadLine();
+                    SystemBoot();
+                }
+                else if(input == "2")
+                {
 
-                    if(option == "1")
+                }
+                else if (input == "3")
+                {
+
+                }
+                else if (input == "4")
+                {
+
+                }
+                else if (input == "5")
+                {
+                    run = false;
+                }
+                else if (input == "6")
+                {
+
+                }
+                else if (input == "7")
+                {
+                    int waitPeriod = 30;
+                    Console.WriteLine("How Frequently would you like in minutes would you like for the system to be scanned");
+                    string userInput = Console.ReadLine();
+
+                    int.TryParse(userInput, out int waitperiod);
+
+                    while (true)
                     {
-                        Console.WriteLine("1234123");
-                    }
-                    else
-                    {
-                        Console.WriteLine("1234");
+                        Console.WriteLine("System Being Monitored");
+                        Thread.Sleep((waitPeriod*60000));//60000 is microseconds in a minute
                     }
                 }
                 else
                 {
-                    // Timeout occurred
-                    //rescan system
-                    Console.WriteLine("rescanning");
-                }
-
-                // Optionally cancel the user input task if it's still running
-                if (!userInputTask.IsCompleted)
-                {
-                    tokenSource.Cancel();
+                    Console.WriteLine("Input not recognized");
                 }
             }
         }
-        static async Task WaitForUserInputAsync(CancellationToken token)
-        {
-            var inputTask = Task.Run(() =>
-            {
-                while (!token.IsCancellationRequested)
-                {
-                    if (Console.KeyAvailable)
-                    {
-                        Console.ReadKey(intercept: true); // Read and discard the key press
-                        break;
-                    }
-                }
-            });
-            await inputTask;
-        }
+
 
         public static void CheckProcess(Process p)//quick check of a process
         {
