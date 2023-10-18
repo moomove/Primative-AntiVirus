@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using Primitive_AntiVirus;
 //using Microsoft.VisualBasic.Devices;
 
 namespace Primitive_AntiVirus
@@ -124,11 +125,11 @@ namespace Primitive_AntiVirus
         List<string> WhiteList = new List<string>();
 
         // Analysing the rest of the processes after sending to B/W list
-        public void AnalyseProcesses(SysProcess process)
+        public void AnalyseProcesses(Process process)
         {
             if (BlackList.Contains(process.ProcessName))
             {
-                process.KillProcess();
+                KillProcess(process);
             }
             else
             {
@@ -139,8 +140,8 @@ namespace Primitive_AntiVirus
                 else
                 {
                     // The process is not in either list, so analyze memory and CPU usage
-                    float memoryUsage = GetMemoryUsage(process.ProcessId);
-                    float cpuUsage = GetCpuUsage(process.ProcessId);
+                    float memoryUsage = GetMemoryUsage(process.Id);
+                    float cpuUsage = GetCpuUsage(process.Id);
 
                     // Check if either memory or CPU usage is above 25%
                     if (memoryUsage > 25.0f || cpuUsage > 25.0f)
