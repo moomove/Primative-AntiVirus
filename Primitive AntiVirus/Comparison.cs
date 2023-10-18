@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
-using Primitive_AntiVirus;
 //using Microsoft.VisualBasic.Devices;
 
 namespace Primitive_AntiVirus
@@ -129,7 +128,7 @@ namespace Primitive_AntiVirus
         {
             if (BlackList.Contains(process.ProcessName))
             {
-                KillProcess(process);
+                SystemMonitor.KillProcess(process);
             }
             else
             {
