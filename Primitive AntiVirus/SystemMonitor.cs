@@ -21,6 +21,7 @@ namespace Primitive_AntiVirus
         static void Main()
         {            
             SystemBoot();
+
             MaintainSystem();
             Console.ReadLine();
            
@@ -32,7 +33,7 @@ namespace Primitive_AntiVirus
             foreach (Process process in uncheckedList)
             {
                 Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName );
-                AnalyiseProcess(process);
+                Comparison.AnalyseProcess(process);
                 
             }
         }

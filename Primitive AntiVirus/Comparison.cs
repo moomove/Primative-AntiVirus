@@ -120,12 +120,14 @@ namespace Primitive_AntiVirus
         */
 
         //Create the two lists for the BlackList and the Whitelist
-        List<string> BlackList = new List<string>();
-        List<string> WhiteList = new List<string>();
+
 
         // Analysing the rest of the processes after sending to B/W list
-        public void AnalyseProcesses(Process process)
+        public static void AnalyseProcess(Process process)
         {
+            List<string> BlackList = new List<string>();
+            List<string> WhiteList = new List<string>();
+
             if (BlackList.Contains(process.ProcessName))
             {
                 SystemMonitor.KillProcess(process);
@@ -143,7 +145,7 @@ namespace Primitive_AntiVirus
                     float cpuUsage = GetCpuUsage(process.Id);
 
                     // Check if either memory or CPU usage is above 25%
-                    if (memoryUsage > 5.0f || cpuUsage > 5.0f)
+                    if (memoryUsage > 1.0f || cpuUsage > 1.0f)
                     {
                         // Prompt the user to add the process to the BlackList
                         Console.WriteLine($"Process {process.ProcessName} has high resource usage. Do you want to add it to the BlackList? (yes/no)");
@@ -170,7 +172,7 @@ namespace Primitive_AntiVirus
     
         
         // Method to Get Memory Usage of a Process by Process ID
-        private float GetMemoryUsage(int processID)
+        private static float GetMemoryUsage(int processID)
         {
             try
             {
@@ -196,7 +198,7 @@ namespace Primitive_AntiVirus
         }
 
         // Method to Get CPU Usage of a Process by Process ID
-        private float GetCpuUsage(int processID)
+        private static float GetCpuUsage(int processID)
         {
             try
             {
