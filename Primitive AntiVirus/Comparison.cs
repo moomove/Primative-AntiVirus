@@ -180,7 +180,7 @@ namespace Primitive_AntiVirus
                     process.Refresh();
 
                     // Get the total physical memory of the system
-                    long totalMemory = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
+                    long totalMemory = (long)new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
 
                     // Calculate memory usage as a percentage
                     float memoryUsagePercentage = (float)process.WorkingSet64 / totalMemory * 100.0f;
