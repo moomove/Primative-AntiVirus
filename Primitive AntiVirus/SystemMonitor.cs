@@ -56,11 +56,11 @@ namespace Primitive_AntiVirus
                 }
                 else if(input == "2")
                 {
-
+                    Comparison.printWBList('b');
                 }
                 else if (input == "3")
                 {
-
+                    Comparison.printWBList('w');
                 }
                 else if (input == "4")
                 {
@@ -123,9 +123,8 @@ namespace Primitive_AntiVirus
             int pId = p.Id;
             Console.WriteLine($"Killing {p}");
             p.Kill();
-            Thread.Sleep(3000);//sleep to see if the process reboots itself
 
-            //p  Process.GetProcessById(pId));
+            p.WaitForExit(3000);
 
             if (p == null)
             {

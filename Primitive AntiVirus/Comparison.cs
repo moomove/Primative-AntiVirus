@@ -1,46 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Management;
-using Microsoft.VisualBasic.Devices;
 
 namespace Primitive_AntiVirus
 {
-    internal class Comparison
+    public static class Comparison
     {
-       /* From PList, get the list of processes
-        From System Monitor, get the processes
+        static List<Process> BlackList = new List<Process>();
+        static List<Process> WhiteList = new List<Process>();
 
-            function Compare
-            compare the processes for matches
-
-            if matching
-            mark as Isolation and tracking = 1
-            exit
-       */
-
-
-    public Comparison()
-        {
-
-        }
         // Analysing the rest of the processes after sending to B/W list
         public static void AnalyseProcess(Process process)
         {
-            List<string> BlackList = new List<string>();
-            List<string> WhiteList = new List<string>();
+            //List<Process> BlackList = new List<Process>();
+            //List<Process> WhiteList = new List<Process>();
 
-            if (BlackList.Contains(process.ProcessName))
+            if (BlackList.Contains(process))
             {
                 SystemMonitor.KillProcess(process);
             }
             else
             {
-                if (WhiteList.Contains(process.ProcessName))
+                if (WhiteList.Contains(process))
                 {
                     return;
                 }
@@ -59,14 +40,20 @@ namespace Primitive_AntiVirus
                         if (userInput.Equals("yes", StringComparison.OrdinalIgnoreCase))
                         {
                             // Add the process to the BlackList
-                            BlackList.Add(process.ProcessName);
+                            BlackList.Add(process);
+                            Console.WriteLine(process.ProcessName + "added to BlackList");
                         }
                         else if (userInput.Equals("no", StringComparison.OrdinalIgnoreCase))
                         {
-                            // Add the process to the WhiteList
-                            WhiteList.Add(process.ProcessName);
+                            Console.WriteLine("No Assumed");
                         }
 
+                    }
+                    else
+                    {
+                        // Add the process to the WhiteList
+                        WhiteList.Add(process);
+                        Console.WriteLine(process.ProcessName + "added to WhiteList");
                     }
                 }
             }
@@ -116,6 +103,23 @@ namespace Primitive_AntiVirus
             {
                 Console.WriteLine($"Error getting CPU usage for process {process.Id}: {ex.Message}");
                 return 0.0f;
+            }
+        }
+        public static void printWBList(char c)
+        {
+            if (c == 'b')
+            {
+                foreach (Process process in WhiteList)
+                {
+                    Console.WriteLine(process.ProcessName + " \t Process Id is " + process.Id);
+                }
+            }
+            else if (c == 'w')
+            {
+                foreach (Process process in BlackList)
+                {
+                    Console.WriteLine(process.ProcessName+ " \t Process Id is " + process.Id);
+                }
             }
         }
 
