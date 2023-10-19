@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace Primitive_AntiVirus
 {
-    public class SysProcess
-    {
-        int ProcessID;
-        string ProcessName;
-        bool PotentallyMalicous;
-        bool WhiteListed;
-        bool BlackListed;
-    }
+    //public class SysProcess
+    //{
+    //    int ProcessID;
+    //    string ProcessName;
+    //    bool PotentallyMalicous;
+    //    bool WhiteListed;
+    //    bool BlackListed;
+    //}
 
     class ProcessList
     {

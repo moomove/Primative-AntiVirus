@@ -14,7 +14,7 @@ namespace Primitive_AntiVirus
        
         static void Main()
         {            
-            SystemBoot();
+           // SystemBoot();
 
             MainSystem();
             Console.ReadLine();
@@ -46,6 +46,8 @@ namespace Primitive_AntiVirus
                 Console.WriteLine("\t5. Shutdown Self");
                 Console.WriteLine("\t6. Trace Process");
                 Console.WriteLine("\t7. Continuous System Scan");
+                Console.WriteLine("\t8. Move Process to white or black List");
+                Console.WriteLine("\t9. Exit Program");
                 Console.WriteLine("");
 
                 string input = Console.ReadLine();
@@ -64,11 +66,12 @@ namespace Primitive_AntiVirus
                 }
                 else if (input == "4")
                 {
-                    Console.WriteLine("Enter Process ID");
+                    Console.WriteLine("Enter Name of Process to kill");
                     input = Console.ReadLine();
-                    
-                    int.TryParse(input, out int pID);
-                    KillProcess(Process.GetProcessById(pID));
+
+                    var processes = Process.GetProcessesByName(input);
+                    KillProcess(processes[0]);
+
                 }
                 else if (input == "5")
                 {
@@ -90,13 +93,29 @@ namespace Primitive_AntiVirus
                     Console.WriteLine("How Frequently would you like in minutes would you like for the system to be scanned");
                     string userInput = Console.ReadLine();
 
-                    int.TryParse(userInput, out int waitperiod);
+                    try
+                    {
+                        waitPeriod = Convert.ToInt32(userInput);
+                    }
+                    catch {
+                        Console.WriteLine("Input not recognised period set to 30");
+                    }
+
 
                     while (true)
                     {
                         Console.WriteLine("System Being Monitored");
-                        Thread.Sleep((waitPeriod*60000));//60000 is microseconds in a minute
+                        Thread.Sleep((waitPeriod*60000));//60000 is milliseconds in a minute
+                        SystemBoot();
                     }
+                }
+                else if (input == "8")
+                {
+                    Comparison.UpdateList();
+                }
+                else if (input == "9")
+                {
+                    run = false;
                 }
                 else
                 {
@@ -106,72 +125,24 @@ namespace Primitive_AntiVirus
         }
 
 
-        public static void CheckProcess(Process p)//quick check of a process
-        {
-            AnalyiseProcess(p);
-        }
-        public static void AllowedProcess()//maybe this should just be a call to the comparisonDB
-        {
-
-        }
-        public static void PassToCompBD()//useless i think we delete
-        {
-
-        }
-        public static void AnalyiseProcess(Process p)//indepth check of a process
-        {
-
-        }
         public static void KillProcess(Process p)
         {
-            //int pId = p.Id;
-            //Console.WriteLine($"Killing {p}");
-            //p.Kill(true);
 
-            //p.WaitForExit(3000);
-
-            //if (p == null)
-            //{
-            //    Console.WriteLine("Successfully killed process");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Unable to kill Process");
-            //}
             string pToTrack = p.ProcessName;
             var processes = Process.GetProcessesByName(pToTrack);
 
             foreach (Process process in processes)
             {
-                process.Kill();
+                try
+                {
+                    process.Kill();
+                }
+                catch {
+                    Console.WriteLine("unable to kill " + process.ProcessName + "Attempting to track");
+                    TrackingAndIso.StartTracking(process);
+                }
             }
         }
-        public static void PromptUser(Process p)
-        {
-            Console.WriteLine($"{p.ProcessName} Is suspected of being suspicious ");
-            UpdateList(p);
-        }
-        public static void UpdateList(Process p)
-        {
-            
-            Console.WriteLine("Add Process to WhiteList [W] or kill process and add to BlackList [B] or any other key to Cancel");
-            string c = Console.ReadLine();
 
-            if(c == "w" ||c == "W")
-            {
-                Console.WriteLine("Adding to WhiteList");
-
-            }
-            else if (c == "b" || c == "B")
-            {
-                Console.WriteLine("Adding to BlackList");
-
-            }
-            else
-            {
-                Console.WriteLine("Cancelled");
-            } 
-
-        }
     }
 }

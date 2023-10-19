@@ -12,8 +12,6 @@ namespace Primitive_AntiVirus
         // Analysing the rest of the processes after sending to B/W list
         public static void AnalyseProcess(Process process)
         {
-            //List<Process> BlackList = new List<Process>();
-            //List<Process> WhiteList = new List<Process>();
 
             if (BlackList.Contains(process.ProcessName))
             {
@@ -124,6 +122,48 @@ namespace Primitive_AntiVirus
                     Console.WriteLine(process);
                 }
             }
+        }
+        public static void UpdateList()
+        {
+            Console.WriteLine("Enter Name of Process to move");
+            string input = Console.ReadLine();
+
+            var processes = Process.GetProcessesByName(input);
+            input = processes[0].ProcessName;
+
+            Console.WriteLine("Add Process to WhiteList [W] or kill process and add to BlackList [B] or any other key to Cancel");
+            string c = Console.ReadLine();
+
+            if (c == "w" || c == "W")
+            {
+                Console.WriteLine("Adding to WhiteList");
+                try
+                {
+                    BlackList.Remove(input);
+                    Console.WriteLine("Process Removed from Blacklist");
+                }
+                catch { }
+
+                WhiteList.Add(input);
+            }
+            else if (c == "b" || c == "B")
+            {
+                Console.WriteLine("Killing and adding to BlackList");
+                try
+                {
+                    WhiteList.Remove(input);
+                    Console.WriteLine("Process Removed from Whitelist");
+                }
+                catch { }
+
+                SystemMonitor.KillProcess(processes[0]);
+                BlackList.Add(input);
+            }
+            else
+            {
+                Console.WriteLine("Cancelled");
+            }
+
         }
 
     }
