@@ -10,63 +10,21 @@ namespace Primitive_AntiVirus
 {
     class TrackingAndIso
     {
-        public Process maliciousProcess;
-        public bool success;
-        public bool processSource;
-
-        public class ProcessTracker
+        public static void StartTracking(Process process)
         {
-            private List<Process> runningProcesses;
-
-            public ProcessTracker()
+            try
             {
-                runningProcesses = new List<Process>();
+                string fullPath = process.MainModule.FileName;
+                Console.WriteLine(fullPath);
             }
-
-            public void StartTracking()
+            catch(Exception ex)
             {
-                // Get all running processes on the system
-                Process[] allProcesses = Process.GetProcesses();
-
-                // Add all running processes to the list
-                foreach (Process process in allProcesses)
-                {
-                    runningProcesses.Add(process);
-                }
-
-              
+                Console.WriteLine($"Error getting file path for process {process.ProcessName}: {ex.Message}");
+                return;
             }
-
-            private void OnTimerTick(object sender)
-            {
-                // Get all running processes on the system
-                Process[] allProcesses = Process.GetProcesses();
-
-                // Check for new processes
-                foreach (Process process in allProcesses)
-                {
-                    if (!runningProcesses.Contains(process))
-                    {
-                        // Add the new process to the list
-                        runningProcesses.Add(process);
-                    }
-                }
-
-                // Check for stopped processes
-                foreach (Process process in runningProcesses)
-                {
-                    if (process.HasExited)
-                    {
-                        // The process has stopped
-                        runningProcesses.Remove(process);
-
-                    }
-                }
-            }
-
-            
+           
         }
     } 
-    }
+}
 
     
