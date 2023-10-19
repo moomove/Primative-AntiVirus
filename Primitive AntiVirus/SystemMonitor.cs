@@ -28,6 +28,7 @@ namespace Primitive_AntiVirus
             {
                 Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName );
                 Comparison.AnalyseProcess(process);
+                TrackingAndIso.StartTracking(process);
                 
             }
         }
