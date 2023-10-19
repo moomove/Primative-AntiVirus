@@ -6,8 +6,8 @@ namespace Primitive_AntiVirus
 {
     public static class Comparison
     {
-        static List<Process> BlackList = new List<Process>();
-        static List<Process> WhiteList = new List<Process>();
+        static List<string> BlackList = new List<string>();
+        static List<string> WhiteList = new List<string>();
 
         // Analysing the rest of the processes after sending to B/W list
         public static void AnalyseProcess(Process process)
@@ -15,13 +15,13 @@ namespace Primitive_AntiVirus
             //List<Process> BlackList = new List<Process>();
             //List<Process> WhiteList = new List<Process>();
 
-            if (BlackList.Contains(process))
+            if (BlackList.Contains(process.ProcessName))
             {
                 SystemMonitor.KillProcess(process);
             }
             else
             {
-                if (WhiteList.Contains(process))
+                if (WhiteList.Contains(process.ProcessName))
                 {
                     return;
                 }
@@ -40,7 +40,7 @@ namespace Primitive_AntiVirus
                         if (userInput.Equals("yes", StringComparison.OrdinalIgnoreCase))
                         {
                             // Add the process to the BlackList
-                            BlackList.Add(process);
+                            BlackList.Add(process.ProcessName);
                             Console.WriteLine(process.ProcessName + "added to BlackList");
                         }
                         else if (userInput.Equals("no", StringComparison.OrdinalIgnoreCase))
@@ -52,7 +52,7 @@ namespace Primitive_AntiVirus
                     else
                     {
                         // Add the process to the WhiteList
-                        WhiteList.Add(process);
+                        WhiteList.Add(process.ProcessName);
                         Console.WriteLine(process.ProcessName + "added to WhiteList");
                     }
                 }
@@ -109,16 +109,18 @@ namespace Primitive_AntiVirus
         {
             if (c == 'b')
             {
-                foreach (Process process in WhiteList)
+                Console.WriteLine("Printing WhiteList\n");
+                foreach (string process in WhiteList)
                 {
-                    Console.WriteLine(process.ProcessName + " \t Process Id is " + process.Id);
+                    Console.WriteLine(process);
                 }
             }
             else if (c == 'w')
             {
-                foreach (Process process in BlackList)
+                Console.WriteLine("Printing WhiteList\n");
+                foreach (string process in BlackList)
                 {
-                    Console.WriteLine(process.ProcessName+ " \t Process Id is " + process.Id);
+                    Console.WriteLine(process);
                 }
             }
         }
