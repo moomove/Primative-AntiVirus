@@ -32,7 +32,7 @@ namespace Primitive_AntiVirus
                     float cpuUsage = GetCpuUsage(process);
 
                     // Check if either memory or CPU usage is above 25%
-                    if (memoryUsage > 2.0f || cpuUsage > 2.0f)
+                    if (memoryUsage > 25.0f || cpuUsage > 25.0f)
                     {
                         // Prompt the user to add the process to the BlackList
                         Console.WriteLine($"Process {process.ProcessName} has high resource usage. Do you want to add it to the BlackList? (yes/no)");
