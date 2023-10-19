@@ -28,8 +28,7 @@ namespace Primitive_AntiVirus
             {
                 Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName );
                 Comparison.AnalyseProcess(process);
-                TrackingAndIso.StartTracking(process);
-                
+                                
             }
         }
         public static void MainSystem()
@@ -70,8 +69,6 @@ namespace Primitive_AntiVirus
                     
                     int.TryParse(input, out int pID);
                     KillProcess(Process.GetProcessById(pID));
-
-
                 }
                 else if (input == "5")
                 {
@@ -79,7 +76,13 @@ namespace Primitive_AntiVirus
                 }
                 else if (input == "6")
                 {
+                    string pToTrack = Console.ReadLine();
+                    var processes = Process.GetProcessesByName(pToTrack);
 
+                    foreach (Process process in processes)
+                    {
+                        TrackingAndIso.StartTracking(process);
+                    }
                 }
                 else if (input == "7")
                 {
@@ -121,19 +124,26 @@ namespace Primitive_AntiVirus
         }
         public static void KillProcess(Process p)
         {
-            int pId = p.Id;
-            Console.WriteLine($"Killing {p}");
-            p.Kill();
+            //int pId = p.Id;
+            //Console.WriteLine($"Killing {p}");
+            //p.Kill(true);
 
-            p.WaitForExit(3000);
+            //p.WaitForExit(3000);
 
-            if (p == null)
+            //if (p == null)
+            //{
+            //    Console.WriteLine("Successfully killed process");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Unable to kill Process");
+            //}
+            string pToTrack = p.ProcessName;
+            var processes = Process.GetProcessesByName(pToTrack);
+
+            foreach (Process process in processes)
             {
-                Console.WriteLine("Successfully killed process");
-            }
-            else
-            {
-                Console.WriteLine("Unable to kill Process");
+                process.Kill();
             }
         }
         public static void PromptUser(Process p)
