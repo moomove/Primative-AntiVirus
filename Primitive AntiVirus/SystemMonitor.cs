@@ -13,9 +13,9 @@ namespace Primitive_AntiVirus
         //public List<ProcessList.SysProcess> CheckedProccess;
        
         static void Main()
-        {            
-           // SystemBoot();
-
+        {
+            // SystemBoot();
+            Comparison.AddTxtToBL();
             MainSystem();
             Console.ReadLine();
            
@@ -39,7 +39,7 @@ namespace Primitive_AntiVirus
                 Console.WriteLine("");
                 Console.WriteLine("Select an operations you would like to run");
                 Console.WriteLine("");
-                Console.WriteLine("\t1. Rescan System");
+                Console.WriteLine("\t1. Scan System");
                 Console.WriteLine("\t2. View BlackListed Processes");
                 Console.WriteLine("\t3. View WhiteListed Processes");
                 Console.WriteLine("\t4. Kill Process");

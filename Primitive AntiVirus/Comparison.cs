@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace Primitive_AntiVirus
 {
@@ -106,17 +107,17 @@ namespace Primitive_AntiVirus
         }
         public static void printWBList(char c)
         {
-            if (c == 'b')
+            if (c == 'w')
             {
-                Console.WriteLine("Printing WhiteList\n");
+                Console.WriteLine("Printing White-List\n");
                 foreach (string process in WhiteList)
                 {
                     Console.WriteLine(process);
                 }
             }
-            else if (c == 'w')
+            else if (c == 'b')
             {
-                Console.WriteLine("Printing WhiteList\n");
+                Console.WriteLine("Printing Black-List\n");
                 foreach (string process in BlackList)
                 {
                     Console.WriteLine(process);
@@ -162,6 +163,31 @@ namespace Primitive_AntiVirus
             else
             {
                 Console.WriteLine("Cancelled");
+            }
+
+        }
+        public static void AddTxtToBL() {
+            string filePath = "blackList.txt";
+
+            try
+            {
+                // Read all the lines from the file into an array
+                string[] bProcesses = File.ReadAllLines(filePath);
+
+                // Alternatively, you can read the entire content as a single string
+                // string fileContent = File.ReadAllText(filePath);
+                Console.WriteLine("\t9. Exit Program");
+                // Display the content of the file
+                Console.WriteLine("File Contents:");
+                foreach (string process in bProcesses)
+                {
+                    BlackList.Add(process);
+                }
+                Console.WriteLine("\t9. Exit Program");
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred while reading the file: " + e.Message);
             }
 
         }

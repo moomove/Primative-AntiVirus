@@ -19,7 +19,7 @@ namespace Primitive_AntiVirus
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Error getting file path for process {process.ProcessName}: {ex.Message}");
+                Console.WriteLine($"\nError getting file path for process {process.ProcessName}: {ex.Message}");
                 return;
             }
            

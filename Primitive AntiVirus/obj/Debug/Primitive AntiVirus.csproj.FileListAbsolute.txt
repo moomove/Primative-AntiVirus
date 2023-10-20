@@ -12,3 +12,11 @@ C:\Users\shami\source\repos\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Pr
 C:\Users\shami\source\repos\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.CoreCompileInputs.cache
 C:\Users\shami\source\repos\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.exe
 C:\Users\shami\source\repos\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.pdb
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.exe.config
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.exe
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\bin\Debug\Primitive AntiVirus.pdb
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.AssemblyReference.cache
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.SuggestedBindingRedirects.cache
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.csproj.CoreCompileInputs.cache
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.exe
+E:\Development\GitHub\Primative-AntiVirus\Primitive AntiVirus\obj\Debug\Primitive AntiVirus.pdb
