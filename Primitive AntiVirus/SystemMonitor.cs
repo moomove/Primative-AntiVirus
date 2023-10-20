@@ -13,9 +13,9 @@ namespace Primitive_AntiVirus
         //public List<ProcessList.SysProcess> CheckedProccess;
        
         static void Main()
-        {
-            // SystemBoot();
+        {            
             Comparison.AddTxtToBL();
+            SystemBoot();
             MainSystem();
             Console.ReadLine();
            
@@ -24,9 +24,10 @@ namespace Primitive_AntiVirus
         public static void SystemBoot()//gets called on load and sets up the rest of the system
         {
             var uncheckedList = ProcessList.GetRunningProcesses();
+            Console.WriteLine("Found Processes:");
             foreach (Process process in uncheckedList)
             {
-                Console.WriteLine(process.WorkingSet64 +" "+ process.ProcessName );
+                Console.WriteLine("\t"+process.ProcessName);
                 Comparison.AnalyseProcess(process);
                                 
             }
@@ -43,10 +44,10 @@ namespace Primitive_AntiVirus
                 Console.WriteLine("\t2. View BlackListed Processes");
                 Console.WriteLine("\t3. View WhiteListed Processes");
                 Console.WriteLine("\t4. Kill Process");
-                Console.WriteLine("\t5. Shutdown Self");
+                Console.WriteLine("\t5. Print current running Process");
                 Console.WriteLine("\t6. Trace Process");
                 Console.WriteLine("\t7. Continuous System Scan");
-                Console.WriteLine("\t8. Move Process to white or black List");
+                Console.WriteLine("\t8. Add Process to white or black List");
                 Console.WriteLine("\t9. Exit Program");
                 Console.WriteLine("");
 
@@ -75,7 +76,12 @@ namespace Primitive_AntiVirus
                 }
                 else if (input == "5")
                 {
-                    run = false;
+                    var pList = ProcessList.GetRunningProcesses();
+
+                    Console.WriteLine("Process ID\tProcess Name\t Process Paged Memory Size(bytes)");
+                    foreach (Process p in pList) {
+                        Console.WriteLine(p.Id + "\t" + p.ProcessName + "\t" + p.PagedMemorySize64);
+                    }
                 }
                 else if (input == "6")
                 {
@@ -136,6 +142,7 @@ namespace Primitive_AntiVirus
                 try
                 {
                     process.Kill();
+                    Console.WriteLine(pToTrack + " killed");
                 }
                 catch {
                     Console.WriteLine("unable to kill " + process.ProcessName + "Attempting to track");
